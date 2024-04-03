@@ -4,7 +4,6 @@ from random import sample
 import string
 
 
-
 class CodeGenerate(models.Model):
     code = models.CharField(max_length=255, blank=True,unique=True)
     
@@ -52,13 +51,36 @@ class Product(CodeGenerate):
     name = models.CharField(max_length=255)
     body = models.TextField()
     price = models.DecimalField(decimal_places=2, max_digits=10)
-    discount_price = models.DecimalField(decimal_places=2, max_digits=10, 
-                                         blank=True, null=True)
+    discount_price = models.DecimalField(decimal_places=2, max_digits=10, blank=True, null=True)
     banner_img = models.ImageField(upload_to='banner-img/')
     quantity = models.IntegerField() 
     delivery = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
+
+    @property 
+    def stock_status(self):
+        return bool(self.quantity)
     
 
+class EnterProduct(CodeGenerate):
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    quantity = models.PositiveIntegerField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.product.name
+    
+    def save(self, *args, **kwargs):
+        if self.pk:
+            object = EnterProduct.objects.get(id=self.id)
+            self.product.quantity -= object.quantity
+        self.product.quantity +=self.quantity
+        self.product.save()
+        super(EnterProduct, self).save(*args, **kwargs)
+
+    
 
 
 class ProductImg(models.Model):
@@ -90,6 +112,7 @@ class Review(models.Model):
             obj.save() 
         else:
             super().save(*args, **kwargs)
+
 
 class Cart(CodeGenerate):
     user = models.ForeignKey(User, on_delete=models.SET_NULL,null=True)
@@ -124,7 +147,6 @@ class Cart(CodeGenerate):
         return count
 
 
-
 class CartProduct(models.Model):
     product = models.ForeignKey(Product,on_delete=models.SET_NULL,null=True)
     cart = models.ForeignKey(Cart,on_delete=models.CASCADE)
@@ -139,3 +161,8 @@ class CartProduct(models.Model):
 class WishList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        if WishList.objects.filter(user=self.user, product=self.product).count():
+            raise ValueError('Dual')
+        super(WishList, self).save(*args, **kwargs)

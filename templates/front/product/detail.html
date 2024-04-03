@@ -120,9 +120,15 @@
                                     cart</a>
                             </li>
                             <li class="wishlist-btn-wrap">
-                                <a class="custom-circle-btn" href="wishlist.html">
+                                {% if result %}
+                                <a class="custom-circle-btn" href="{% url 'front:remove_from_wishlist' product.code %}">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </a>
+                                {% else %}
+                                <a class="custom-circle-btn" href="{% url 'front:add_to_wishlist' product.code %}">
                                     <i class="pe-7s-like"></i>
                                 </a>
+                                {% endif %}
                             </li>
                             <li class="compare-btn-wrap">
                                 <a class="custom-circle-btn" href="compare.html">
