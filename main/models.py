@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from random import sample
+from datetime import datetime
 import string
 
 
@@ -116,7 +117,14 @@ class Review(models.Model):
 
 class Cart(CodeGenerate):
     user = models.ForeignKey(User, on_delete=models.SET_NULL,null=True)
-    is_active = models.BooleanField(default=True)
+    status = models.IntegerField(
+        choices=(
+            (1, 'No  faol'),
+            (2, "Yo'lda"),
+            (3, 'Qaytarilgan'),
+            (4, 'Qabul qilingan'),  
+        )
+    )
     order_date = models.DateTimeField(null=True, blank=True)
 
     @property
@@ -145,7 +153,11 @@ class Cart(CodeGenerate):
         for i in queryset:
             count += i.count * i.product.price
         return count
-
+ 
+    def save(self, *args, **kwargs):
+        if self.status == 2 and Cart.objects.get(id=self.id).status == 1 :
+            self.order_date = datetime.now()
+        super(Cart, self).save(*args, **kwargs )
 
 class CartProduct(models.Model):
     product = models.ForeignKey(Product,on_delete=models.SET_NULL,null=True)
@@ -156,6 +168,10 @@ class CartProduct(models.Model):
     def price(self):
         count = self.count * self.product.price
         return count
+    
+    @property
+    def date(self):
+        return self.cart.order_date
     
 
 class WishList(models.Model):

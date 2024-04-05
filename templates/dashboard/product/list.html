@@ -26,6 +26,12 @@
                         <option value="{{category.code}}" {% if category.code == category_code %} selected {% endif %}>{{category}}</option>
                         {% endfor %}
                     </select>
+                    <input type="text" name="name" class="form-control " placeholder="name">
+                    <input type="text" name="quantity" class="form-control " placeholder="quantity">
+                    <div class="checkbox">
+                        <input type="checkbox" name="is_discount" id="checkbox1"> 
+                        <label for="checkbox1" style="margin-top: 5px;">Is Discount</label>
+                    </div>
                     <div class="input-group-prepend">
                         <button class="input-group-text" id="inputGroup-sizing-sm" type="submit">Filterlash</button>
                     </div>

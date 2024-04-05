@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from main import models
 from main.funcs import staff_required
+from itertools import chain
 
 @staff_required 
 def index(request):
@@ -46,7 +47,21 @@ def product_list(request):
     categories = models.Category.objects.all()
     category_code = request.GET.get('category_code')
     if category_code and category_code != '0':
-        queryset = models.Product.objects.filter(category__code=category_code)
+        if request.GET.get('is_discount'):
+            queryset = models.Product.objects.filter(
+                category__code = category_code,
+                name__icontains = request.GET.get('name'),
+                quantity = request.GET.get('quantity'),
+                discount_price__isnull=False
+                )
+        else:
+            queryset = models.Product.objects.filter(
+                category__code = category_code,
+                name__icontains = request.GET.get('name'),
+                quantity = request.GET.get('quantity'),
+                discount_price__isnull=True
+                )
+
     else:
         queryset = models.Product.objects.all()
     context = {
@@ -160,6 +175,8 @@ def product_video_delete(request, id):
     product_video.delete()
     return redirect('dashboard:product_update',product_video.product_id)
 
+# ---------ENTER PRODUCT----------------
+
 @staff_required 
 def create_enter_product(request):
     products = models.Product.objects.all()
@@ -212,20 +229,26 @@ def delete_enter_product(request, code):
     enter_product.delete()
     return redirect('dashboard:list_enter_product')    
 
+# ---------PRODUCT HISTORY----------------
+
 @staff_required 
 def product_history(request, code):
     enters = models.EnterProduct.objects.filter(product__code=code)
-    outs = models.CartProduct.objects.filter(product__code=code, cart__is_active=False)
-
-    enter_times = {}
-    for enter in enters:
-        enter_times[enter]:enter.date
+    outs = models.CartProduct.objects.filter(product__code=code, cart__status=4)
+    queryset = list(chain(enters, outs))
+    queryset.sort(key=lambda x:x.date, reverse=True)
+    result_queryset = []
+    for query in queryset:
+        try:
+            models.EnterProduct.objects.get(code=query.code)
+            query.is_enter = True
+        except:
+            query.is_enter = False
+        result_queryset.append(query)
     
-    out_times = {}
-    for out in outs:
-        out_times[out]:out.cart.order_date
     
-    print(enter_times, out_times)
+    return True
+    
 
  
 

@@ -10,7 +10,7 @@ def staff_required(func):
         return result
     return wrapper
 
-def wishlist(request, code):
+def wishlist_1(request, code):
     product = models.Product.objects.get(code=code)
     try:
         models.WishList.objects.get(user=request.user, product=product)
@@ -18,6 +18,21 @@ def wishlist(request, code):
     except:
         result = False
     return result
+
+def wishlist_2(request, *args, **kwargs):
+    if not args and not kwargs:
+        products = models.Product.objects.all()
+    else:
+        products = models.Product.objects.filter(**kwargs)
+    resulted_products = []
+    for product in products:
+        data = models.WishList.objects.filter(product=product, user=request.user)
+        if data:
+            product.is_like = True 
+        else:
+            product.is_like = False
+        resulted_products.append(product)
+    return resulted_products
 
 
 

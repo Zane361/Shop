@@ -53,7 +53,7 @@
                                         </td>
                                         <td class="product-name"><a href="#">{{i.product.name}}</a></td>
                                         <td class="product-price"><span class="amount">{{i.product.price}}</span></td>
-                                        {% if cart.is_active %}
+                                        {% if cart.status == 1 %}
                                         <form action="{% url 'front:plus_minus' i.id %}" method="post">{% csrf_token %}
                                         <td class="quantity">
                                             <div class="counter">
@@ -85,16 +85,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        {% if cart.is_active %}
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="coupon-all">
-                                    <div class="coupon2">
-                                        <a class="btn btn-dark" href="{% url 'front:cart_deactivate' %}">Order</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {% if cart.status == 1 %}
                         {% endif %}
                         <div class="row">
                             <div class="col-md-5 ml-auto">
@@ -104,10 +95,42 @@
                                         <li>Subtotal <span>{{cart.price}}</span></li>
                                         <li>Total <span>{{cart.total_price}}</span></li>
                                     </ul>
-                                    <a href="#">Proceed to checkout</a>
                                 </div>
+                                
                             </div>
                         </div>
+                            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#quickModal">
+                                Order
+                            </button>
+                          
+                          <!-- Begin Modal Area -->
+                            <div class="modal quick-view-modal fade" id="quickModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="quickModal" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" data-tippy="Close" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="modal-wrap row">
+                                                <div class="row">
+                                                    <h1>Proceed to checkout</h1>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-3">
+                                                        <a class="btn btn-dark" href="{% url 'front:cart_deactivate' %}">Order</a>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <a class="btn btn-danger" href="{% url 'front:index' %}">Cancel</a>
+                                                    </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal Area End Here -->
+
                 </div>
             </div>
         </div>

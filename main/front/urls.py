@@ -23,4 +23,8 @@ urlpatterns = [
     path('list-wishlist/', views.list_wishlist, name='list_wishlist'),
     path('add-to-wishlist/<str:code>/', views.add_to_wishlist, name='add_to_wishlist'),
     path('remove-from-wishlist/<str:code>/', views.remove_from_wishlist, name='remove_from_wishlist'),
+    #
+    path('list-orders/', views.list_orders, name='list_orders'),
+    path('receive-order/<str:code>/', views.receive_order, name='receive_order'),
+    path('reject-order/<str:code>/', views.reject_order, name='reject_order'),
 ]

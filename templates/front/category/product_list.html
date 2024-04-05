@@ -174,14 +174,18 @@
                                             <div class="product-add-action">
                                                 <ul>
                                                     <li>
-                                                        <a type="" href="wishlist.html" data-tippy="Add to wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                                            <i class="pe-7s-like"></i>
-
-                                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                                        </a>
+                                                        {% if query.is_like %}
+                                                            <a class="custom-circle-btn" href="{% url 'front:remove_from_wishlist' query.code %}" data-tippy="Remove From Wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="fa fa-heart" style="color: red;" aria-hidden="true"></i>
+                                                            </a>
+                                                        {% else %}
+                                                            <a class="custom-circle-btn" href="{% url 'front:add_to_wishlist' query.code %}" data-tippy="Add To Wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="fa fa-heart-o"></i>
+                                                            </a>
+                                                        {% endif %}
                                                     </li>
                                                     <li class="quuickview-btn" data-bs-toggle="modal" data-bs-target="#quickModal">
-                                                        <a href="{% url 'front:product_detail' query.code %}">
+                                                        <a href="{% url 'front:product_detail' query.code %}" data-tippy="Product Detail" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
                                                             <i class="pe-7s-look"></i>
                                                         </a>
                                                     </li>
@@ -235,23 +239,25 @@
                                             <div class="product-add-action">
                                                 <ul>
                                                     <li>
-                                                        <a href="wishlist.html" data-tippy="Add to wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                                            <i class="pe-7s-like"></i>
-                                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                                        </a>
+                                                        {% if query.is_like %}
+                                                            <a class="custom-circle-btn" href="{% url 'front:remove_from_wishlist' query.code %}" data-tippy="Remove From Wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="fa fa-heart" style="color: red;" aria-hidden="true"></i>
+                                                            </a>
+                                                        {% else %}
+                                                            <a class="custom-circle-btn" href="{% url 'front:add_to_wishlist' query.code %}" data-tippy="Add To Wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="fa fa-heart-o"></i>
+                                                            </a>
+                                                        {% endif %}
                                                     </li>
                                                     <li class="quuickview-btn" data-bs-toggle="modal" data-bs-target="#quickModal">
-                                                        <a href="{% url 'front:product_detail' query.code %}">
+                                                        <a href="{% url 'front:product_detail' query.code %}" data-tippy="Product Detail" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
                                                             <i class="pe-7s-look"></i>
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <form method="post">
-                                                            {% csrf_token %}
-                                                            <button type="submit" name="product_id" value="{{product.id}}" data-tippy="Add to cart" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                                                <i class="pe-7s-cart"></i>
-                                                            </button>
-                                                        </form>
+                                                        <a href="{% url 'front:add_to_cart' query.code %}" data-tippy="Add to cart" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                            <i class="pe-7s-cart"></i>
+                                                        </a>
                                                     </li>
                                                 </ul>
                                             </div>

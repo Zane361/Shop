@@ -148,9 +148,15 @@
                                                 <div class="product-add-action">
                                                     <ul>
                                                         <li>
-                                                            <a  href="wishlist.html" data-tippy="Add to wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                                                <i class="pe-7s-like"></i>
+                                                            {% if product.is_like %}
+                                                            <a class="custom-circle-btn" href="{% url 'front:remove_from_wishlist' product.code %}">
+                                                                <i class="fa fa-heart" style="color: red;" aria-hidden="true"></i>
                                                             </a>
+                                                            {% else %}
+                                                            <a class="custom-circle-btn" href="{% url 'front:add_to_wishlist' product.code %}">
+                                                                <i class="fa fa-heart-o"></i>
+                                                            </a>
+                                                            {% endif %}
                                                         </li>
                                                         <li class="quuickview-btn">
                                                             <a href="{% url 'front:product_detail' product.code %}">

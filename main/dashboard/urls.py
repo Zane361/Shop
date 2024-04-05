@@ -26,6 +26,8 @@ urlpatterns = [
     # ------PRODUCT IMG------------
     path('product-img-delete/<int:id>/', views.product_img_delete,name='product_img_delete'),
     path('product-video-delete/<int:id>/', views.product_video_delete,name='product_video_delete'),
-    
+    # ------PRODUCT HISTORY------------
+    path('product-history/<str:code>/', views.product_history, name='product_history'),
+
 
 ]
