@@ -9,12 +9,12 @@
                         <div class="row h-100">
                             <div class="col-lg-12">
                                 <div class="breadcrumb-item">
-                                    <h2 class="breadcrumb-heading">My Account Page</h2>
+                                    <h2 class="breadcrumb-heading">Mening Akauntim</h2>
                                     <ul>
                                         <li>
-                                            <a href="{% url 'front:index' %}">Home</a>
+                                            <a href="{% url 'front:index' %}">Asosiy Sahifa</a>
                                         </li>
-                                        <li>My Account</li>
+                                        <li>Mening Akauntim</li>
                                     </ul>
                                 </div>
                             </div>
@@ -30,16 +30,16 @@
                                         <a class="nav-link active" id="account-dashboard-tab" data-bs-toggle="tab" href="#account-dashboard" role="tab" aria-controls="account-dashboard" aria-selected="true">Dashboard</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="account-orders-tab" data-bs-toggle="tab" href="#account-orders" role="tab" aria-controls="account-orders" aria-selected="false">Orders</a>
+                                        <a class="nav-link" id="account-not-received-orders-tab" href="{% url 'front:list_orders' %}" >Qabul qilinmagan Buyurtmalar</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="account-address-tab" data-bs-toggle="tab" href="#account-address" role="tab" aria-controls="account-address" aria-selected="false">Addresses</a>
+                                        <a class="nav-link" id="account-orders-tab" href="{% url 'front:carts' %}" >Buyurtmalar</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="account-details-tab" data-bs-toggle="tab" href="#account-details" role="tab" aria-controls="account-details" aria-selected="false">Account Details</a>
+                                        <a class="nav-link" id="account-details-tab" data-bs-toggle="tab" href="#account-details" role="tab" aria-controls="account-details" aria-selected="false">Akaunt ma'lumotlari</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="account-logout-tab" href="{% url 'auth:logout' %}" role="tab" aria-selected="false">Logout</a>
+                                        <a class="nav-link" id="account-logout-tab" href="{% url 'auth:logout' %}" role="tab" aria-selected="false">Chiqish</a>
                                     </li>
                                 </ul>
                             </div>
@@ -47,60 +47,13 @@
                                 <div class="tab-content myaccount-tab-content" id="account-page-tab-content">
                                     <div class="tab-pane fade show active" id="account-dashboard" role="tabpanel" aria-labelledby="account-dashboard-tab">
                                         <div class="myaccount-dashboard">
-                                            <p>Hello <b>{{user.username}}</b>
+                                            <p>Salom <b>{{user.username}}</b>
                                         </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="account-orders" role="tabpanel" aria-labelledby="account-orders-tab">
-                                        <div class="myaccount-orders">
-                                            <h4 class="small-title">MY ORDERS</h4>
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered table-hover">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th>ORDER</th>
-                                                            <th>DATE</th>
-                                                            <th>STATUS</th>
-                                                            <th>TOTAL</th>
-                                                            <th></th>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a class="account-order-id" href="#">#5364</a></td>
-                                                            <td>Mar 27, 2019</td>
-                                                            <td>On Hold</td>
-                                                            <td>$162.00 for 2 items</td>
-                                                            <td><a href="#" class="btn btn-dark"><span>View</span></a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a class="account-order-id" href="#">#5356</a></td>
-                                                            <td>Mar 27, 2019</td>
-                                                            <td>On Hold</td>
-                                                            <td>$162.00 for 2 items</td>
-                                                            <td><a href="#" class="btn btn-dark"><span>View</span></a>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                        <div class="myaccount-dashboard">
+                                            <p>Ism: <b>{{user.first_name}}</b>
                                         </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="account-address" role="tabpanel" aria-labelledby="account-address-tab">
-                                        <div class="myaccount-address">
-                                            <p>The following addresses will be used on the checkout page by default.</p>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <h4 class="small-title">BILLING ADDRESS</h4>
-                                                    <address>
-                                                        1234 Heaven Stress, Beverly Hill OldYork UnitedState of Lorem
-                                                    </address>
-                                                </div>
-                                                <div class="col">
-                                                    <h4 class="small-title">SHIPPING ADDRESS</h4>
-                                                    <address>
-                                                        1234 Heaven Stress, Beverly Hill OldYork UnitedState of Lorem
-                                                    </address>
-                                                </div>
-                                            </div>
+                                        <div class="myaccount-dashboard">
+                                            <p>Familiya: <b>{{user.last_name}}</b>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="account-details" role="tabpanel" aria-labelledby="account-details-tab">
@@ -109,11 +62,11 @@
                                                 {% csrf_token %}
                                                 <div class="myaccount-form-inner">
                                                     <div class="single-input single-input-half">
-                                                        <label>First Name*</label>
+                                                        <label>Ism*</label>
                                                         <input type="text" value="{{user.first_name}}" name="f_name">
                                                     </div>
                                                     <div class="single-input single-input-half">
-                                                        <label>Last Name*</label>
+                                                        <label>Familiya*</label>
                                                         <input type="text" value="{{user.last_name}}" name="l_name">
                                                     </div>
                                                     <div class="single-input">
@@ -121,22 +74,20 @@
                                                         <input type="email" value="{{user.email}}" name="email">
                                                     </div>
                                                     <div class="single-input">
-                                                        <label>Current Password(leave blank to leave
-                                                            unchanged)</label>
+                                                        <label>Hozirgi parol</label>
                                                         <input type="password" name="password">
                                                     </div>
                                                     <div class="single-input">
-                                                        <label>New Password (leave blank to leave
-                                                            unchanged)</label>
+                                                        <label>Yangi parol (O'zgartirmoqchi bo'lmasangiz bo'sh qoldiring)</label>
                                                         <input type="password" name="new_password">
                                                     </div>
                                                     <div class="single-input">
-                                                        <label>Confirm New Password</label>
+                                                        <label>Yangi parolni tasdiqlang</label>
                                                         <input type="password" name="new_password_confirm">
                                                     </div>
                                                     <div class="single-input">
                                                         <button class="btn btn-custom-size lg-size btn-pronia-primary" type="submit">
-                                                            <span>SAVE CHANGES</span>
+                                                            <span>SAQLASH</span>
                                                         </button>
                                                     </div>
                                                 </div>

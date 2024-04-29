@@ -5,37 +5,64 @@
 
 <div class="main-content">
     <div class="page-header">
-        <h2 class="header-title">SHOP</h2>
+        <h2 class="header-title">Magazin</h2>
         <div class="header-sub-title">
             <nav class="breadcrumb breadcrumb-dash">
                 <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Dashboard</a>
-                <a class="breadcrumb-item" href="#">Product</a>
-                <span class="breadcrumb-item active">Ro`yxat</span>
+                <a class="breadcrumb-item" href="#">Mahsulot</a>
+                <span class="breadcrumb-item active">Ro'yxat</span>
             </nav>
         </div>
     </div>
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-around">
-            <h4>Productlar ro`yxat</h4>
+            <h4>Mahsulotlar ro'yxati</h4>
             <div>
-                <form class="input-group input-group-sm mb-3">
-                    <select name="category_code" class="form-control">
-                        <option value="0">Barchasi</option>
-                        {% for category in categories %}
-                        <option value="{{category.code}}" {% if category.code == category_code %} selected {% endif %}>{{category}}</option>
-                        {% endfor %}
-                    </select>
-                    <input type="text" name="name" class="form-control " placeholder="name">
-                    <input type="text" name="quantity" class="form-control " placeholder="quantity">
-                    <div class="checkbox">
-                        <input type="checkbox" name="is_discount" id="checkbox1"> 
-                        <label for="checkbox1" style="margin-top: 5px;">Is Discount</label>
+                <button type="button" class="input-group-text" data-toggle="modal" data-target=".bd-example-modal-xl"><i class="fas fa-list-ul"></i></button>
+
+                <div class="modal fade bd-example-modal-xl">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title h4">Mahsulotlar bo'yicha filter</h5>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <i class="anticon anticon-close"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="input-group input-group-sm mb-3" method="get">
+                                    <select name="category_code" class="form-control" style="margin-left: 0.5rem; font-size:small;">
+                                        <option value="0">Barchasi</option>
+                                        {% for category in categories %}
+                                        <option value="{{category.code}}" {% if category.code == category_code %} selected {% endif %}>{{category}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <input type="text" name="name" class="form-control " placeholder="Nom" style="margin-left: 0.5rem; font-size:small;">
+                                    <input type="text" name="price" class="form-control " placeholder="Narx" style="margin-left: 0.5rem; font-size:small;">
+                                    <div class="checkbox" style="margin-right: 0.5rem; margin-left: 0.5rem; margin-top: 1.5rem;">
+                                        <input type="checkbox" name="is_discount" id="checkbox1"> 
+                                        <label for="checkbox1" style="margin-top: 5px;">Chegirmasi</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <input type="datetime-local" name="start_date" class="form-control">
+                                        <label for="checkbox1">Sanadan</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <input type="datetime-local" name="end_date" class="form-control">
+                                        <label for="checkbox1">Sanagacha</label>
+                                    </div>
+                                    <div class="input-group-prepend">
+                                        <button class="btn btn-primary btn-tone m-r-5" id="inputGroup-sizing-sm" type="submit">Filterlash</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="input-group-prepend">
-                        <button class="input-group-text" id="inputGroup-sizing-sm" type="submit">Filterlash</button>
-                    </div>
-                </form>
+                </div>
+
+
+                
             </div>
             </div>
             <div class="m-t-25">
@@ -44,7 +71,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Category</th>
+                                <th scope="col">Kategoriya</th>
                                 <th scope="col">Nom</th>
                                 <th scope="col">Harakatlar</th>
                             </tr>

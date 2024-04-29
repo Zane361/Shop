@@ -7,7 +7,7 @@
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Pronia - Shop</title>
+    <title>Online Magazin</title>
     <meta name="robots" content="index, follow" />
     <meta name="description" content="Pronia plant store bootstrap 5 template is an awesome website template for any home plant shop.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,8 +53,8 @@
                             <div class="header-top">
                                 <ul class="dropdown-wrap">
                                     <li class="dropdown">
-                                        <div class="btn btn-link  ht-btn">
-                                            .
+                                        <div class="btn btn-link">
+                                            
                                         </div>                                        
                                     </li>
                                 </ul>
@@ -83,28 +83,24 @@
 
                                 <div class="header-right">
                                     <ul>
-                                        <li>
-                                            <a href="#exampleModal" class="search-btn bt" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                <i class="pe-7s-search"></i>
-                                            </a>
-                                        </li>
+                                        
                                         <li class="dropdown d-none d-lg-block">
                                             <button class="btn btn-link dropdown-toggle ht-btn p-0" type="button" id="settingButton" data-bs-toggle="dropdown" aria-label="setting" aria-expanded="false">
                                                 <i class="pe-7s-users"></i>
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="settingButton">
                                                 {% if user.is_authenticated %}
-                                                <li><a class="dropdown-item" href="{% url 'auth:profile' %}">My account</a></li>
-                                                <li><a class="dropdown-item" href="{% url 'auth:logout' %}">Logout</a>
+                                                <li><a class="dropdown-item" href="{% url 'auth:profile' %}">Mening akauntim</a></li>
+                                                <li><a class="dropdown-item" href="{% url 'auth:logout' %}">Chiqish</a>
                                                 {% else %}
-                                                <li><a class="dropdown-item" href="{% url 'auth:login' %}">Login</a>
-                                                <li><a class="dropdown-item" href="{% url 'auth:register' %}">Register</a>
+                                                <li><a class="dropdown-item" href="{% url 'auth:login' %}">Kirish</a>
+                                                <li><a class="dropdown-item" href="{% url 'auth:register' %}">Ro'yxatdan o'tish</a>
                                                 {% endif %}
                                                 </li>
                                             </ul>
                                         </li>
                                         <li class="d-none d-lg-block">
-                                            <a href="wishlist.html">
+                                            <a href="{% url 'front:list_wishlist' %}">
                                                 <i class="pe-7s-like"></i>
                                             </a>
                                         </li>
@@ -133,23 +129,15 @@
                                 <nav class="main-nav">
                                     <ul>
                                         <li class="drop-holder">
-                                            <a href="{% url 'front:index' %}">Home</a>
+                                            <a href="{% url 'front:index' %}">Asosiy Sahifa</a>
                                         </li>
                                         <li class="megamenu-holder">
-                                            <a href="shop.html">Shop</a>
+                                            <a href="{% url 'front:product_list' %}">Barcha mahsulotlar</a>
                                         </li>
                                         <li class="drop-holder">
-                                            <a href="blog.html">Blog</a>
+                                            <a href="{% url 'front:random_product' %}">Tasodifiy mahsulot</a>
                                         </li>
-                                        <li>
-                                            <a href="about.html">About Us</a>
-                                        </li>
-                                        <li class="drop-holder">
-                                            <a href="#">Pages</a>
-                                        </li>
-                                        <li>
-                                            <a href="contact.html">Contact Us</a>
-                                        </li>
+                                        
                                     </ul>
                                 </nav>
                             </div>
@@ -167,27 +155,6 @@
                                     <img src="{% static 'front/images/logo/dark.png' %}" alt="Header Logo">
                                 </a>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
-                <div class="modal-dialog modal-fullscreen">
-                    <div class="modal-content modal-bg-dark">
-                        <div class="modal-header">
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" data-tippy="Close" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="modal-search">
-                                <span class="searchbox-info">Start typing and press Enter to search or ESC to close</span>
-                                <form action="#" class="hm-searchbox">
-                                    <input type="text" name="Search..." value="Search..." onblur="if(this.value==''){this.value='Search...'}" onfocus="if(this.value=='Search...'){this.value=''}" autocomplete="off">
-                                    <button class="search-btn" type="submit" aria-label="searchbtn">
-                                        <i class="pe-7s-search"></i>
-                                    </button>
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -212,119 +179,69 @@
                                 <img src="{% static 'front/images/logo/dark.png' %}" alt="Logo">
                             </a>
                         </div>
-                        <p class="footer-widget-desc">Lorem ipsum dolor sit amet, consec adipisl elit, sed do eiusmod
-                            tempor
-                            <br>
-                    incidio ut labore et dolore magna.
-                        </p>
                         <div class="social-link with-border">
                             <ul>
                                 <li>
-                                    <a href="#" data-tippy="Facebook" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                        <i class="fa fa-facebook"></i>
+                                    <a href="https://t.me/zane361" data-tippy="Telegram" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                        <i class="fa fa-telegram"></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" data-tippy="Twitter" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                    <a href="https://twitter.com/zane361361" data-tippy="Twitter" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
                                         <i class="fa fa-twitter"></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" data-tippy="Pinterest" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                        <i class="fa fa-pinterest"></i>
+                                    <a href="#" data-tippy="Instagram" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                        <i class="fa fa-instagram"></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" data-tippy="Dribbble" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                        <i class="fa fa-dribbble"></i>
+                                    <a href="https://www.youtube.com/channel/UCn30eUiHNDT6hf1gEzvq5Yw" data-tippy="You Tube" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                        <i class="fa fa-youtube"></i>
                                     </a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-4 pt-40">
+                <div class="col-lg-3 col-md-4 pt-40">
                     <div class="footer-widget-item">
-                        <h3 class="footer-widget-title">Useful Links</h3>
+                        <h3 class="footer-widget-title">Mahsulotlar</h3>
                         <ul class="footer-widget-list-item">
                             <li>
-                                <a href="#">About Pronia</a>
+                                <a href="{% url 'front:product_list' %}">Barcha mahsulotlar</a>
                             </li>
                             <li>
-                                <a href="#">How to shop</a>
-                            </li>
-                            <li>
-                                <a href="#">FAQ</a>
-                            </li>
-                            <li>
-                                <a href="#">Contact us</a>
-                            </li>
-                            <li>
-                                <a href="#">Log in</a>
+                                <a href="{% url 'front:random_product' %}">Tasodifiy mahsulot</a>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-4 pt-40">
+                <div class="col-lg-3 col-md-4 pt-40">
                     <div class="footer-widget-item">
-                        <h3 class="footer-widget-title">My Account</h3>
+                        <h3 class="footer-widget-title">Akaunt</h3>
                         <ul class="footer-widget-list-item">
                             <li>
-                                <a href="#">Sign In</a>
+                                <a href="{% url 'auth:profile' %}">Mening akauntim</a>
                             </li>
                             <li>
-                                <a href="#">View Cart</a>
-                            </li>
-                            <li>
-                                <a href="#">My Wishlist</a>
-                            </li>
-                            <li>
-                                <a href="#">Track My Order</a>
-                            </li>
-                            <li>
-                                <a href="#">Help</a>
+                                <a href="{% url 'auth:logout' %}">Chiqish</a>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-4 pt-40">
+                <div class="col-lg-3 col-md-4 pt-40">
                     <div class="footer-widget-item">
-                        <h3 class="footer-widget-title">Our Service</h3>
+                        <h3 class="footer-widget-title">Ma'lumotlar</h3>
                         <ul class="footer-widget-list-item">
                             <li>
-                                <a href="#">Payment Methods</a>
+                                <a href="{% url 'front:active_cart' %}">Savat</a>
                             </li>
                             <li>
-                                <a href="#">Money Guarantee!</a>
-                            </li>
-                            <li>
-                                <a href="#">Returns</a>
-                            </li>
-                            <li>
-                                <a href="#">Shipping</a>
-                            </li>
-                            <li>
-                                <a href="#">Privacy Policy</a>
+                                <a href="{% url 'front:list_wishlist' %}">Istaklar</a>
                             </li>
                         </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3 pt-40">
-                    <div class="footer-contact-info">
-                        <h3 class="footer-widget-title">Got Question? Call Us</h3>
-                        <a class="number" href="tel://123-456-789">123 456 789</a>
-                        <div class="address">
-                            <ul>
-                                <li>
-                                    Your Address Goes Here
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="payment-method">
-                        <a href="#">
-                            <img src="{% static 'front/images/payment/1.png' %}" alt="Payment Method">
-                        </a>
                     </div>
                 </div>
             </div>
@@ -335,8 +252,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="copyright">
-                        <span class="copyright-text">© 2021 Pronia Made with <i class="fa fa-heart text-danger"></i> by
-                    <a href="https://hasthemes.com/" rel="noopener" target="_blank">HasThemes</a> </span>
+                        <span class="copyright-text">© 2024 Shomalik Davlatov <i class="fa fa-heart text-danger"></i> 
+                    <a href="https://t.me/zane361" rel="noopener" target="_blank">Zane</a> </span>
                     </div>
                 </div>
             </div>

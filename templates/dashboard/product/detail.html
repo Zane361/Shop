@@ -7,8 +7,8 @@
         <div class="header-sub-title">
             <nav class="breadcrumb breadcrumb-dash">
                 <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Dashboard</a>
-                <a class="breadcrumb-item" href="#">Maxsulotlar</a>
-                <span class="breadcrumb-item active">Maxsulot</span>
+                <a class="breadcrumb-item" href="#">Mahsulotlar</a>
+                <span class="breadcrumb-item active">Batafsil</span>
             </nav>
         </div>
     </div>
@@ -33,7 +33,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <b>{{queryset.name}}ni o`chirmoqchimisiz?</b>
+                                    <b>{{queryset.name}}ni o'chirmoqchimisiz?</b>
                                 </div>
                                 <div class="btn-group">
                                     <form method="post" action="{% url 'dashboard:product_delete' queryset.code %}">
@@ -119,9 +119,12 @@
                                         <a href="" class="text-dark">{{r.user.username}}</a>
                                     </h6>
                                 <div class="star-rating m-t-15">
-                                    {% for i in ratings %}
-                                    <input type="radio" id="star{{forloop.counter}}-{{forloop.counter}}" name="rating-{{forloop.counter}}" value="{{forloop.counter}}"  {% if i == r.mark %} checked="" {% endif %} disabled=""><label for="star{{forloop.counter}}-{{forloop.counter}}" title="{{forloop.counter}} star"></label>
-                                    {% endfor %}
+                                    <input type="radio" id="star{{forloop.counter}}-5" name="rating-{{forloop.counter}}" value="5" {% if r.mark == 5 %} checked=''  {% else %} disabled ='' {% endif %}><label for="star{{forloop.counter}}-5" title="5 star"></label>
+                                    <input type="radio" id="star{{forloop.counter}}-4" name="rating-{{forloop.counter}}" value="4" {% if r.mark == 4 %} checked=''  {% else %} disabled ='' {% endif %}><label for="star{{forloop.counter}}-4" title="4 star"></label>
+                                    <input type="radio" id="star{{forloop.counter}}-3" name="rating-{{forloop.counter}}" value="3" {% if r.mark == 3 %} checked=''  {% else %} disabled ='' {% endif %}><label for="star{{forloop.counter}}-3" title="3 star"></label>
+                                    <input type="radio" id="star{{forloop.counter}}-2" name="rating-{{forloop.counter}}" value="2" {% if r.mark == 2 %} checked=''  {% else %} disabled ='' {% endif %}><label for="star{{forloop.counter}}-2" title="2 star"></label>
+                                    <input type="radio" id="star{{forloop.counter}}-1" name="rating-{{forloop.counter}}" value="1" {% if r.mark == 1 %} checked=''  {% else %} disabled ='' {% endif %}><label for="star{{forloop.counter}}-1" title="1 star"></label>
+                                
                                 </div>
                             </div>
                             <span>{{r.text}}</span>

@@ -55,7 +55,7 @@ def profile(request):
         password = request.POST.get('password')
         new_password = request.POST.get('new_password')
         new_password_confirm = request.POST.get('new_password_confirm')
-        if authenticate(username=username,password=password):
+        if authenticate(username=username, password=password):
             user = models.User.objects.get(username=username)
             user.first_name = f_name if f_name else ''
             user.last_name = l_name if l_name else ''
@@ -64,7 +64,6 @@ def profile(request):
                 user.set_password(new_password)
             user.save()
             return redirect('auth:profile')
-        # return redirect('front:profile')
     return render(request, 'front/auth/profile.html')
 
 

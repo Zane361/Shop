@@ -9,10 +9,10 @@
             <div class="row h-100">
                 <div class="col-lg-12">
                     <div class="breadcrumb-item">
-                        <h2 class="breadcrumb-heading">Product</h2>
+                        <h2 class="breadcrumb-heading">Mahsulot</h2>
                         <ul>
                             <li>
-                                <a href="{% url 'front:index' %}">Home</a>
+                                <a href="{% url 'front:index' %}">Asosiy Sahifa</a>
                             </li>
                             <li>{{product.name}}</li>
                         </ul>
@@ -71,7 +71,10 @@
                     <div class="single-product-content">
                         <h2 class="title">{{product.name}}</h2>
                         <div class="price-box">
-                            <span class="new-price">{{product.price}} sum</span>
+                            <span class="new-price">{{product.price}}</span><br>
+                            {% if product.discount_price %}
+                            <span class="new-price">Chegirma narx: {{product.discount_price}}</span>
+                            {% endif %}
                         </div>
                         <div class="rating-box-wrap pb-4">
                             <div class="rating-box">
@@ -91,33 +94,10 @@
                         </div>
                         <p class="short-desc">
                             {{product.body}}
-                        </p>
-                        {% if product.discount_price %}
-                        <div class="countdown-wrap pb-5">
-                            <div class="countdown item-4" data-countdown="2025/09/25" data-format="short">
-                                <div class="countdown__item me-3">
-                                    <span class="countdown__time daysLeft"></span>
-                                    <span class="countdown__text daysText"></span>
-                                </div>
-                                <div class="countdown__item me-3">
-                                    <span class="countdown__time hoursLeft"></span>
-                                    <span class="countdown__text hoursText"></span>
-                                </div>
-                                <div class="countdown__item me-3">
-                                    <span class="countdown__time minsLeft"></span>
-                                    <span class="countdown__text minsText"></span>
-                                </div>
-                                <div class="countdown__item">
-                                    <span class="countdown__time secsLeft"></span>
-                                    <span class="countdown__text secsText"></span>
-                                </div>
-                            </div>
-                        </div>                          
-                        {% endif %}
+                        </p>            
                         <ul class="quantity-with-btn">
                             <li class="add-to-cart">
-                                <a class="btn btn-custom-size lg-size btn-pronia-primary" href="{% url 'front:add_to_cart' product.code %}">Add to
-                                    cart</a>
+                                <a class="btn btn-custom-size lg-size btn-pronia-primary" href="{% url 'front:add_to_cart' product.code %}">Savatga qo'shish</a>
                             </li>
                             <li class="wishlist-btn-wrap">
                                 {% if result %}
@@ -130,70 +110,19 @@
                                 </a>
                                 {% endif %}
                             </li>
-                            <li class="compare-btn-wrap">
-                                <a class="custom-circle-btn" href="compare.html">
-                                    <i class="pe-7s-refresh-2"></i>
-                                </a>
-                            </li>
                         </ul>
-                        <ul class="service-item-wrap">
-                            <li class="service-item">
-                                <div class="service-img">
-                                    <img src="{% static 'front/images/shipping/icon/car.png' %}" alt="Shipping Icon">
-                                </div>
-                                <div class="service-content">
-                                    <span class="title">Free <br> Shipping</span>
-                                </div>
-                            </li>
-                            <li class="service-item">
-                                <div class="service-img">
-                                    <img src="{% static 'front/images/shipping/icon/card.png' %}" alt="Shipping Icon">
-                                </div>
-                                <div class="service-content">
-                                    <span class="title">Safe <br> Payment</span>
-                                </div>
-                            </li>
-                            <li class="service-item">
-                                <div class="service-img">
-                                    <img src="{% static 'front/images/shipping/icon/service.png' %}" alt="Shipping Icon">
-                                </div>
-                                <div class="service-content">
-                                    <span class="title">Safe <br> Payment</span>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="product-category">
-                            <span class="title">Category :</span>
+                        <div class="product-category" style="margin-top: 1rem;">
+                            <span class="title">Kategoriyasi :</span>
                             <ul>
                                 <li>
                                     <a href="#">{{product.category}}</a>
                                 </li>
                             </ul>
                         </div>
-                        <div class="product-category social-link align-items-center pb-0">
-                            <span class="title pe-3">Share:</span>
-                            <ul>
-                                <li>
-                                    <a href="#" data-tippy="Pinterest" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                        <i class="fa fa-pinterest-p"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" data-tippy="Twitter" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                        <i class="fa fa-twitter"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" data-tippy="Tumblr" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                        <i class="fa fa-tumblr"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" data-tippy="Dribbble" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                        <i class="fa fa-dribbble"></i>
-                                    </a>
-                                </li>
-                            </ul>
+                        <div>
+                            <a href="{{product.qrcode_img.url}}" class="swiper-slide">
+                                <img class="img-full" src="{{product.qrcode_img.url}}" alt="Product Thumnail">
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -206,40 +135,16 @@
                 <div class="col-lg-12">
                     <ul class="nav product-tab-nav tab-style-2 pt-0" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <a class="tab-btn" id="information-tab" data-bs-toggle="tab" href="#information" role="tab" aria-controls="information" aria-selected="false">
-                                Information
-                            </a>
-                        </li>
-                        <li class="nav-item" role="presentation">
                             <a class="active tab-btn" id="description-tab" data-bs-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">
-                                Description
+                                Batafsil
                             </a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <a class="tab-btn" id="reviews-tab" data-bs-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">
-                                Reviews({{reviews|length}})
+                                Sharhlar({{reviews|length}})
                             </a>
                         </li>
                     </ul>
-                    <div class="tab-content product-tab-content">
-                        <div class="tab-pane fade" id="information" role="tabpanel" aria-labelledby="information-tab">
-                            <div class="product-information-body">
-                                <h4 class="title">Shipping</h4>
-                                <p class="short-desc mb-4">The item will be shipped from China. So it need 15-20 days to
-                                    deliver. Our product is good with reasonable price and we believe you will worth it.
-                                    So please wait for it patiently! Thanks.Any question please kindly to contact us and
-                                    we promise to work hard to help you to solve the problem</p>
-                                <h4 class="title">About return request</h4>
-                                <p class="short-desc mb-4">If you don't need the item with worry, you can contact us
-                                    then we will help you to solve the problem, so please close the return request!
-                                    Thanks</p>
-                                <h4 class="title">Guarantee</h4>
-                                <p class="short-desc mb-0">If it is the quality question, we will resend or refund to
-                                    you; If you receive damaged or wrong items, please contact us and attach some
-                                    pictures about product, we will exchange a new correct item to you after the
-                                    confirmation.</p>
-                            </div>
-                        </div>
                         <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
                             <div class="product-description-body">
                                 <p class="short-desc mb-0">{{product.body}}
@@ -249,7 +154,7 @@
                         <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                             <div class="product-review-body">
                                 <div class="blog-comment mt-0">
-                                    <h4 class="heading">Comments ({{reviews|length}})</h4>
+                                    <h4 class="heading">Izohlar ({{reviews|length}})</h4>
                                     {% for review in reviews %}
                                     <div class="blog-comment-item">
                                         <div class="blog-comment-img">
@@ -268,30 +173,29 @@
                                 </div>
                                 {% if user.is_authenticated %}
                                 <div class="feedback-area">
-                                    <h2 class="heading">Leave a comment</h2>
-                                    <form class="feedback-form">
-                                        <div class="group-input">
-                                            <div class="form-field me-md-30 mb-30 mb-md-0">
-                                                <input type="text" name="name" placeholder="Your Name*" class="input-field">
-                                            </div>
-                                            <div class="form-field">
-                                                <input type="text" name="email" placeholder="Your Email*" class="input-field">
-                                            </div>
+                                    <h2 class="heading">Izoh qoldirish</h2>
+                                    <form class="feedback-form" method="post">
+                                        {% csrf_token %}
+                                        <p class="user-comment">Baho:</p>
+                                        <div class="form-field mt-30">
+                                            <select name="mark" class="input-field">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
                                         </div>
                                         <div class="form-field mt-30">
-                                            <input type="text" name="subject" placeholder="Subject (Optinal)" class="input-field">
-                                        </div>
-                                        <div class="form-field mt-30">
-                                            <textarea name="message" placeholder="Message" class="textarea-field"></textarea>
+                                            <textarea name="text" placeholder="Izoh" class="textarea-field"></textarea>
                                         </div>
                                         <div class="button-wrap pt-5">
-                                            <button type="submit" value="submit" class="btn btn-custom-size xl-size btn-pronia-primary" name="submit">Post
-                                                Comment</button>
+                                            <button type="submit" class="btn btn-custom-size xl-size btn-pronia-primary">Izoh qoldirish</button>
                                         </div>
                                     </form>
                                 </div>
                                 {% else %}
-                                <h4>Login for writing comment</h4>                                  
+                                <h4>Izoh qoldirish uchun login qiling</h4>                                  
                                 {% endif %}
                             </div>
                         </div>
@@ -301,194 +205,6 @@
         </div>
     </div>
 
-    <!-- Begin Product Area -->
-    <!-- <div class="product-area section-space-y-axis-90">
-        <div class="container">
-            <div class="row">
-                <div class="section-title-wrap without-tab">
-                    <h2 class="section-title">Related Products</h2>
-                    <p class="section-desc">Contrary to popular belief, Lorem Ipsum is not simply random text. It has
-                        roots in a piece of classical Latin literature
-                    </p>
-                </div>
-                <div class="col-lg-12">
-                    <div class="swiper-container product-slider">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide product-item">
-                                <div class="product-img">
-                                    <a href="single-product-variable.html">
-                                        <img class="primary-img" src="assets/images/product/medium-size/1-9-270x300.jpg" alt="Product Images">
-                                        <img class="secondary-img" src="assets/images/product/medium-size/1-10-270x300.jpg" alt="Product Images">
-                                    </a>
-                                    <div class="product-add-action">
-                                        <ul>
-                                            <li>
-                                                <a href="wishlist.html" data-tippy="Add to wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                                    <i class="pe-7s-like"></i>
-                                                </a>
-                                            </li>
-                                            <li class="quuickview-btn" data-bs-toggle="modal" data-bs-target="#quickModal">
-                                                <a href="#" data-tippy="Quickview" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                                    <i class="pe-7s-look"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="cart.html" data-tippy="Add to cart" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                                    <i class="pe-7s-cart"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="product-content">
-                                    <a class="product-name" href="single-product-variable.html">American Marigold</a>
-                                    <div class="price-box pb-1">
-                                        <span class="new-price">$23.45</span>
-                                    </div>
-                                    <div class="rating-box">
-                                        <ul>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide product-item">
-                                <div class="product-img">
-                                    <a href="single-product-variable.html">
-                                        <img class="primary-img" src="assets/images/product/medium-size/1-10-270x300.jpg" alt="Product Images">
-                                        <img class="secondary-img" src="assets/images/product/medium-size/1-11-270x300.jpg" alt="Product Images">
-                                    </a>
-                                    <div class="product-add-action">
-                                        <ul>
-                                            <li>
-                                                <a href="wishlist.html" data-tippy="Add to wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                                    <i class="pe-7s-like"></i>
-                                                </a>
-                                            </li>
-                                            <li class="quuickview-btn" data-bs-toggle="modal" data-bs-target="#quickModal">
-                                                <a href="#" data-tippy="Quickview" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                                    <i class="pe-7s-look"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="cart.html" data-tippy="Add to cart" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                                    <i class="pe-7s-cart"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="product-content">
-                                    <a class="product-name" href="single-product-variable.html">Black Eyed Susan</a>
-                                    <div class="price-box pb-1">
-                                        <span class="new-price">$25.45</span>
-                                    </div>
-                                    <div class="rating-box">
-                                        <ul>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide product-item">
-                                <div class="product-img">
-                                    <a href="single-product-variable.html">
-                                        <img class="primary-img" src="assets/images/product/medium-size/1-11-270x300.jpg" alt="Product Images">
-                                        <img class="secondary-img" src="assets/images/product/medium-size/1-4-270x300.jpg" alt="Product Images">
-                                    </a>
-                                    <div class="product-add-action">
-                                        <ul>
-                                            <li>
-                                                <a href="wishlist.html" data-tippy="Add to wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                                    <i class="pe-7s-like"></i>
-                                                </a>
-                                            </li>
-                                            <li class="quuickview-btn" data-bs-toggle="modal" data-bs-target="#quickModal">
-                                                <a href="#" data-tippy="Quickview" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                                    <i class="pe-7s-look"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="cart.html" data-tippy="Add to cart" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                                    <i class="pe-7s-cart"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="product-content">
-                                    <a class="product-name" href="single-product-variable.html">Bleeding Heart</a>
-                                    <div class="price-box pb-1">
-                                        <span class="new-price">$30.45</span>
-                                    </div>
-                                    <div class="rating-box">
-                                        <ul>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide product-item">
-                                <div class="product-img">
-                                    <a href="single-product-variable.html">
-                                        <img class="primary-img" src="assets/images/product/medium-size/1-7-270x300.jpg" alt="Product Images">
-                                        <img class="secondary-img" src="assets/images/product/medium-size/1-8-270x300.jpg" alt="Product Images">
-                                    </a>
-                                    <div class="product-add-action">
-                                        <ul>
-                                            <li>
-                                                <a href="wishlist.html" data-tippy="Add to wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                                    <i class="pe-7s-like"></i>
-                                                </a>
-                                            </li>
-                                            <li class="quuickview-btn" data-bs-toggle="modal" data-bs-target="#quickModal">
-                                                <a href="#" data-tippy="Quickview" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                                    <i class="pe-7s-look"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="cart.html" data-tippy="Add to cart" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                                    <i class="pe-7s-cart"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="product-content">
-                                    <a class="product-name" href="single-product-variable.html">Bloody Cranesbill</a>
-                                    <div class="price-box pb-1">
-                                        <span class="new-price">$45.00</span>
-                                    </div>
-                                    <div class="rating-box">
-                                        <ul>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- Product Area End Here -->
 
 </main>
 <!-- Main Content Area End Here  -->

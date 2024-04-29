@@ -2,37 +2,94 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from main import models
 from main import funcs
+import random
+
+
 
 
 def index(request):
+    try:
+        products = funcs.wishlist_2(request)
+        new_products = funcs.wishlist_2(request, '-date')
+    except:
+        products = models.Product.objects.all()
+        new_products = models.Product.objects.all()
     categories = models.Category.objects.all()
-    products = funcs.wishlist_2(request)
-    reviews = models.Review.objects.all()
-    mark = 0
-
-    for i in reviews:
-        mark += i.mark
-
-    mark = int(mark/len(reviews)) if reviews else 0
+    reviews = models.Review.objects.all().order_by('-mark')
     context = {
         'categories':categories,
-        'products':products,
-        'rating':range(1,6),
-        'mark':mark,
+        'products':products[:8],
+        'new_products':new_products[:4],
+        'reviews':reviews[:3]
         }
     return render(request, 'front/index.html',context)
+
+# ---------- CATEGORY ----------
+
+def category_detail(request, id):
+    queryset = funcs.wishlist_2(request, category_id=id)
+    categories = models.Category.objects.all()
+    if request.method == 'GET':
+        filtered_items = {}
+        my_bool = False
+        for key, value in request.GET.items():
+            if value:
+                if key == 'name':
+                    key = 'name__icontains'
+                elif key == 'price':
+                    start = value.split(';')[0]
+                    end = value.split(';')[1]
+                    filtered_items['price__gte'] = start
+                    filtered_items['price__lte'] = end
+                    continue
+                elif key == 'filter':
+                    if value == '0':
+                        continue
+                    else:
+                        my_bool = True
+                        continue
+                filtered_items[key] = value
+        if my_bool:
+            if request.GET.get('filter') == '1':
+                queryset = funcs.wishlist_2(request, '-date', category_id=id, **filtered_items)
+            elif request.GET.get('filter') == '2':
+                queryset = funcs.wishlist_2(request, 'date', category_id=id, **filtered_items)
+            elif request.GET.get('filter') == '3':
+                queryset = funcs.wishlist_2(request, '-price', category_id=id, **filtered_items)
+            elif request.GET.get('filter') == '4':
+                queryset = funcs.wishlist_2(request, 'price', category_id=id, **filtered_items)
+        else:
+                queryset = funcs.wishlist_2(request, category_id=id, **filtered_items)            
+    context = {
+        'queryset':queryset,
+        'categories':categories,
+        }
+    return render(request, 'front/category/detail.html',context)
+
+# ---------- PRODUCT ----------
 
 def product_detail(request, code):
     product = models.Product.objects.get(code=code)
     reviews = models.Review.objects.filter(product=product)
     images = models.ProductImg.objects.filter(product=product)
     mark = 0
+    try:
+        for i in reviews:
+            mark += i.mark
 
-    for i in reviews:
-        mark += i.mark
-
-    mark = int(mark/len(reviews)) if reviews else 0
-
+        mark = int(mark/len(reviews)) if reviews else 0
+    except:
+        mark = 0
+    if request.method =='POST':
+        try:
+            models.Review.objects.create(
+                mark = int(request.POST.get('mark')),
+                product = product,
+                user = request.user,
+                text = request.POST.get('text'),
+            )
+        except:
+            raise ValueError('Xatolik!')
     context = {
         'product':product,
         'mark':mark,
@@ -43,14 +100,51 @@ def product_detail(request, code):
     }
     return render(request, 'front/product/detail.html',context)
 
-def product_list(request, id):
-    queryset = funcs.wishlist_2(request, category_id=id)
+def product_list(request):
+    queryset = funcs.wishlist_2(request)
     categories = models.Category.objects.all()
+    if request.method == 'GET':
+        filtered_items = {}
+        my_bool = False
+        for key, value in request.GET.items():
+            if value:
+                if key == 'name':
+                    key = 'name__icontains'
+                elif key == 'price':
+                    start = value.split(';')[0]
+                    end = value.split(';')[1]
+                    filtered_items['price__gte'] = start
+                    filtered_items['price__lte'] = end
+                    continue
+                elif key == 'filter':
+                    if value == '0':
+                        continue
+                    else:
+                        my_bool = True
+                        continue
+                filtered_items[key] = value
+        if my_bool:
+            if request.GET.get('filter') == '1':
+                queryset = funcs.wishlist_2(request, '-date', **filtered_items)
+            elif request.GET.get('filter') == '2':
+                queryset = funcs.wishlist_2(request, 'date', **filtered_items)
+            elif request.GET.get('filter') == '3':
+                queryset = funcs.wishlist_2(request, '-price', **filtered_items)
+            elif request.GET.get('filter') == '4':
+                queryset = funcs.wishlist_2(request, 'price', **filtered_items)
+        else:
+                queryset = funcs.wishlist_2(request, **filtered_items)            
     context = {
         'queryset':queryset,
         'categories':categories,
         }
-    return render(request, 'front/category/product_list.html',context)
+    return render(request, 'front/product/list.html', context)
+
+def random_product(request):
+    product = random.choice(models.Product.objects.all())
+    return redirect('front:product_detail', product.code)
+
+# ---------- CART ----------
 
 @login_required(login_url='auth:login')
 def carts(request):
@@ -124,6 +218,8 @@ def plus_minus(request, id):
     product.save()
     return redirect('front:cart_detail', code)
 
+# ---------- WISHLIST ----------
+
 @login_required(login_url='auth:login')
 def list_wishlist(request):
     queryset = models.WishList.objects.filter(user=request.user)
@@ -149,6 +245,8 @@ def remove_from_wishlist(request, code):
         return redirect('front:index')
     return redirect('front:list_wishlist') 
 
+# ---------- ORDER ----------
+
 @login_required(login_url='auth:login')
 def list_orders(request):
     orders = models.Cart.objects.filter(user=request.user, status__in=[2,3])
@@ -170,3 +268,4 @@ def reject_order(request, code):
     cart.status = 3
     cart.save()
     return redirect('front:list_orders')
+

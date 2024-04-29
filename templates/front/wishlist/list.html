@@ -10,19 +10,19 @@
                     <div class="row h-100">
                         <div class="col-lg-12">
                             <div class="breadcrumb-item">
-                                <h2 class="breadcrumb-heading">Wishlist Page</h2>
+                                <h2 class="breadcrumb-heading">Istaklar</h2>
                                 <ul>
                                     <li>
-                                        <a href="index.html">Home</a>
+                                        <a href="{% url 'front:index' %}">Asosiy Sahifa</a>
                                     </li>
-                                    <li>Wishlist</li>
+                                    <li>Istaklar</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="wishlist-area section-space-y-axis-100">
+            <div class="wishlist-area section-space-y-axis-10">
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
@@ -31,12 +31,12 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th class="product_remove">remove</th>
-                                                <th class="product-thumbnail">images</th>
-                                                <th class="cart-product-name">Product</th>
-                                                <th class="product-price">Unit Price</th>
-                                                <th class="product-stock-status">Stock Status</th>
-                                                <th class="cart_btn">add to cart</th>
+                                                <th class="product_remove">O'chirish</th>
+                                                <th class="product-thumbnail">Rasmlar</th>
+                                                <th class="cart-product-name">Nomi</th>
+                                                <th class="product-price">Narxi (donasi)</th>
+                                                <th class="product-stock-status">Qoldiq</th>
+                                                <th class="cart_btn">Savatga qo'shish</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -60,8 +60,12 @@
                                                 {% else %}
                                                 <td class="product-price"><span class="amount">{{q.product.price}}</span></td>
                                                 {% endif %}
-                                                <td class="product-stock-status"><span class="in-stock">{{q.product.stock_status}}</span></td>
-                                                <td class="cart_btn"><a href="{% url 'front:add_to_cart' q.product.code %}">add to cart</a></td>
+                                                {% if q.product.stock_status %}
+                                                <td class="product-stock-status"><span class="in-stock">Bor</span></td>
+                                                {% else %}
+                                                <td class="product-stock-status"><span class="in-stock">Yo'q</span></td>
+                                                {% endif %}
+                                                <td class="cart_btn"><a href="{% url 'front:add_to_cart' q.product.code %}">Savatga</a></td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>

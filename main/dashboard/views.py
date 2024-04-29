@@ -2,13 +2,15 @@ from django.shortcuts import render, redirect
 from main import models
 from main.funcs import staff_required
 from itertools import chain
+from django.db.models import Q
+from datetime import datetime
 
 @staff_required 
 def index(request):
     context = {}
     return render(request, 'dashboard/index.html', context)
 
-# ---------CATEGORY-------------
+# ---------- CATEGORY ----------
 
 @staff_required 
 def category_list(request):
@@ -40,30 +42,34 @@ def category_delete(request, code):
     queryset.delete()
     return redirect('dashboard:category_list')
 
-# ---------PRODUCT----------------
+# ---------- PRODUCT ----------
 
 @staff_required 
 def product_list(request):
     categories = models.Category.objects.all()
     category_code = request.GET.get('category_code')
-    if category_code and category_code != '0':
-        if request.GET.get('is_discount'):
-            queryset = models.Product.objects.filter(
-                category__code = category_code,
-                name__icontains = request.GET.get('name'),
-                quantity = request.GET.get('quantity'),
-                discount_price__isnull=False
-                )
-        else:
-            queryset = models.Product.objects.filter(
-                category__code = category_code,
-                name__icontains = request.GET.get('name'),
-                quantity = request.GET.get('quantity'),
-                discount_price__isnull=True
-                )
-
-    else:
-        queryset = models.Product.objects.all()
+    queryset = models.Product.objects.all()
+    filter_items = {}
+    for key, value in request.GET.items():
+        if key == 'category_code' and value == '0':
+            continue
+        if value:
+            if key == 'start_date':
+                key = 'date__gte'
+            elif key == 'end_date':
+                key = 'date__lte'
+            elif key == 'category_code':
+                key = 'category__code'
+            elif key == 'name':
+                key = 'name__icontains'
+            elif key == 'price':
+                key = 'price__lte'
+            elif key == 'is_discount':
+                key = 'discount_price__isnull'
+                filter_items[key] = False
+                continue
+            filter_items[key] = value
+    queryset = models.Product.objects.filter(**filter_items)
     context = {
           'queryset':queryset,
           'categories':categories,
@@ -76,13 +82,11 @@ def product_detail(request, code):
     queryset = models.Product.objects.get(code=code)
     images = models.ProductImg.objects.filter(product=queryset)
     reviews = models.Review.objects.filter(product=queryset)
-    ratings = range(5,0,-1)
     videos = models.ProductVideo.objects.filter(product=queryset)
     context = {
           'queryset':queryset,
           'images':images,
           'reviews':reviews,
-          'ratings':ratings,
           'videos':videos
     }
     return render(request, 'dashboard/product/detail.html', context)
@@ -128,7 +132,7 @@ def product_update(request, code):
         if request.FILES.get('banner_img'):
             product.banner_img = request.FILES.get('banner_img')
         delivery = True if request.POST.get('delivery') else False
-        product.category_id = request.POST.get('category_id')
+        product.category_code = request.POST.get('category_code')
         product.name = request.POST.get('name')
         product.body = request.POST.get('body')
         product.price = request.POST.get('price') 
@@ -167,7 +171,7 @@ def product_delete(request, code):
 def product_img_delete(request, id):
     product_img = models.ProductImg.objects.get(id=id)
     product_img.delete()
-    return redirect('dashboard:product_update',product_img.product_id)
+    return redirect('dashboard:product_list')
 
 @staff_required 
 def product_video_delete(request, id):
@@ -175,7 +179,7 @@ def product_video_delete(request, id):
     product_video.delete()
     return redirect('dashboard:product_update',product_video.product_id)
 
-# ---------ENTER PRODUCT----------------
+# ---------- ENTER PRODUCT ----------
 
 @staff_required 
 def create_enter_product(request):
@@ -229,7 +233,7 @@ def delete_enter_product(request, code):
     enter_product.delete()
     return redirect('dashboard:list_enter_product')    
 
-# ---------PRODUCT HISTORY----------------
+# ---------- PRODUCT HISTORY ----------
 
 @staff_required 
 def product_history(request, code):
@@ -248,7 +252,5 @@ def product_history(request, code):
     
     
     return True
-    
 
- 
 

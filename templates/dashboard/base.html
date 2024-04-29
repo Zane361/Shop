@@ -1,10 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-{% load static %}
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Enlink - Admin Dashboard Template</title>
+    <title>Admin Panel</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{% static 'dashboard/images/logo/favicon.png' %}">
@@ -61,8 +61,7 @@
                                             <img src="{% static 'dashboard/images/avatars/thumb-3.jpg' %}" alt="">
                                         </div>
                                         <div class="m-l-10">
-                                            <p class="m-b-0 text-dark font-weight-semibold">Marshall Nichols</p>
-                                            <p class="m-b-0 opacity-07">UI/UX Desinger</p>
+                                            <p class="m-b-0 text-dark font-weight-semibold"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -70,25 +69,7 @@
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div>
                                             <i class="anticon opacity-04 font-size-16 anticon-user"></i>
-                                            <span class="m-l-10">Edit Profile</span>
-                                        </div>
-                                        <i class="anticon font-size-10 anticon-right"></i>
-                                    </div>
-                                </a>
-                                <a href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <i class="anticon opacity-04 font-size-16 anticon-lock"></i>
-                                            <span class="m-l-10">Account Setting</span>
-                                        </div>
-                                        <i class="anticon font-size-10 anticon-right"></i>
-                                    </div>
-                                </a>
-                                <a href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <i class="anticon opacity-04 font-size-16 anticon-project"></i>
-                                            <span class="m-l-10">Projects</span>
+                                            <span class="m-l-10">Profilni yangilash</span>
                                         </div>
                                         <i class="anticon font-size-10 anticon-right"></i>
                                     </div>
@@ -97,7 +78,7 @@
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div>
                                             <i class="anticon opacity-04 font-size-16 anticon-logout"></i>
-                                            <span class="m-l-10">Logout</span>
+                                            <span class="m-l-10">Chiqish</span>
                                         </div>
                                         <i class="anticon font-size-10 anticon-right"></i>
                                     </div>
@@ -119,7 +100,7 @@
                                 <span class="icon-holder">
                                     <i class="anticon anticon-appstore"></i>
                                 </span>
-                                <span class="title">Shop menu</span>
+                                <span class="title">Magazin menusi</span>
                                 <span class="arrow">
                                     <i class="arrow-icon"></i>
                                 </span>
@@ -129,9 +110,9 @@
                                     <li class="nav-item dropdown open">
                                         <a class="dropdown-toggle" href="javascript:void(0);">
                                             <span class="icon-holder">
-                                                <i class="anticon anticon-ordered-list"></i>
+                                                <i class="fas fa-folder-open"></i>
                                             </span>
-                                            <span class="title">Category</span>
+                                            <span class="title">Kategoriya</span>
                                             <span class="arrow">
                                                 <i class="arrow-icon"></i>
                                             </span>
@@ -139,17 +120,16 @@
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <a href="{% url 'dashboard:category_create' %}">
-                                                    <i class="anticon anticon-plus-circle"></i>
-                                                    Create
+                                                    <i class="fas fa-plus-circle"></i>
+                                                    Yaratish
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="{% url 'dashboard:category_list' %}">
                                                     <span class="icon-holder">
-                                                        <i class="fas fa-align-justify"></i>
-                                                        List
-                                                    </span>
-                                                      
+                                                        <i class="fas fa-list-ul"></i>
+                                                        Ro'yxat
+                                                    </span>  
                                                 </a>
                                             </li>
                                         </ul>
@@ -160,9 +140,9 @@
                                     <li class="nav-item dropdown open">
                                         <a class="dropdown-toggle" href="javascript:void(0);">
                                             <span class="icon-holder">
-                                                <i class="anticon anticon-heat-map"></i>
+                                                <i class="fas fa-shopping-basket"></i>
                                             </span>
-                                            <span class="title">Product</span>
+                                            <span class="title">Mahsulot</span>
                                             <span class="arrow">
                                                 <i class="arrow-icon"></i>
                                             </span>
@@ -170,14 +150,14 @@
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <a href="{% url 'dashboard:product_create' %}">
-                                                    <i class="anticon anticon-plus-circle"></i>
-                                                    Create
+                                                    <i class="fas fa-plus-circle"></i>
+                                                    Yaratish
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="{% url 'dashboard:product_list' %}">
-                                                    <i class="fas fa-align-justify"></i>
-                                                    List
+                                                    <i class="fas fa-list-ul"></i>
+                                                    Ro'yxat
                                                 </a>
                                             </li>
                                         </ul>
@@ -187,9 +167,9 @@
                                     <li class="nav-item dropdown open">
                                         <a class="dropdown-toggle" href="javascript:void(0);">
                                             <span class="icon-holder">
-                                                <i class="anticon anticon-heat-map"></i>
+                                                <i class="fas fa-sign-in-alt"></i>
                                             </span>
-                                            <span class="title">Enter Product</span>
+                                            <span class="title">Mahsulot kirimlari</span>
                                             <span class="arrow">
                                                 <i class="arrow-icon"></i>
                                             </span>
@@ -197,14 +177,14 @@
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <a href="{% url 'dashboard:create_enter_product' %}">
-                                                    <i class="anticon anticon-plus-circle"></i>
-                                                    Create
+                                                    <i class="fas fa-plus-circle"></i>
+                                                    Yaratish
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="{% url 'dashboard:list_enter_product' %}">
-                                                    <i class="fas fa-align-justify"></i>
-                                                    List
+                                                    <i class="fas fa-list-ul"></i>
+                                                    Ro'yxat
                                                 </a>
                                             </li>
                                         </ul>
@@ -212,8 +192,6 @@
                                 </li>
                             </ul>
                         </li>
-                       
-                        
                     </ul>
                 </div>
             </div>
@@ -227,10 +205,9 @@
                 <!-- Footer START -->
                 <footer class="footer">
                     <div class="footer-content">
-                        <p class="m-b-0">Copyright © 2019 Theme_Nate. All rights reserved.</p>
+                        <p class="m-b-0">© 2024</p>
                         <span>
-                            <a href="" class="text-gray m-r-15">Term &amp; Conditions</a>
-                            <a href="" class="text-gray">Privacy &amp; Policy</a>
+                            <a href="https://t.me/zane361" class="text-gray m-r-15">Shomalik Davlatov</a>
                         </span>
                     </div>
                 </footer>

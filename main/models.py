@@ -3,7 +3,9 @@ from django.contrib.auth.models import AbstractUser
 from random import sample
 from datetime import datetime
 import string
-
+import qrcode
+from PIL import Image
+from io import BytesIO
 
 class CodeGenerate(models.Model):
     code = models.CharField(max_length=255, blank=True,unique=True)
@@ -56,6 +58,8 @@ class Product(CodeGenerate):
     banner_img = models.ImageField(upload_to='banner-img/')
     quantity = models.IntegerField() 
     delivery = models.BooleanField(default=False)
+    date = models.DateTimeField(auto_now_add=True)
+    qrcode_img = models.ImageField(blank=True, upload_to='qrcode-img/')
 
     def __str__(self):
         return self.name
@@ -63,6 +67,14 @@ class Product(CodeGenerate):
     @property 
     def stock_status(self):
         return bool(self.quantity)
+    
+    def save(self, *args, **kwargs):
+        qr_image = qrcode.make(self.name, box_size=15)
+        qr_image_pil = qr_image.get_image()
+        stream = BytesIO()
+        qr_image_pil.save(stream, format='PNG')
+        self.qrcode_img.save(f"{self.name}.png", BytesIO(stream.getvalue()), save=False)
+        super(Product, self).save(*args, **kwargs)
     
 
 class EnterProduct(CodeGenerate):
@@ -80,8 +92,6 @@ class EnterProduct(CodeGenerate):
         self.product.quantity +=self.quantity
         self.product.save()
         super(EnterProduct, self).save(*args, **kwargs)
-
-    
 
 
 class ProductImg(models.Model):
@@ -101,7 +111,14 @@ class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
 
+    @property
+    def mark_iter(self):
+        return range(self.mark)
+
     def save(self, *args, **kwargs):
+        if not self.mark in (1, 2, 3, 4, 5):
+            print(self.mark)
+            raise ValueError("1 dan 5 gacha bo'lgan baho bering!")
         if self.pk:
             obj = Review.objects.filter(product=self.product, user=self.user).exclude(pk=self.pk).first()
         else:
@@ -110,9 +127,7 @@ class Review(models.Model):
         if obj:
             obj.mark = self.mark
             obj.text = self.text
-            obj.save() 
-        else:
-            super().save(*args, **kwargs)
+        super(Review, self).save(*args, **kwargs)
 
 
 class Cart(CodeGenerate):
@@ -159,6 +174,7 @@ class Cart(CodeGenerate):
             self.order_date = datetime.now()
         super(Cart, self).save(*args, **kwargs )
 
+
 class CartProduct(models.Model):
     product = models.ForeignKey(Product,on_delete=models.SET_NULL,null=True)
     cart = models.ForeignKey(Cart,on_delete=models.CASCADE)
@@ -166,8 +182,14 @@ class CartProduct(models.Model):
 
     @property
     def price(self):
-        count = self.count * self.product.price
-        return count
+        return self.count * self.product.price
+    
+    @property
+    def discount_price(self):
+        try:
+            return self.count * self.product.discount_price
+        except:
+            return None
     
     @property
     def date(self):
